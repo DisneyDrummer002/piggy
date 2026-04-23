@@ -3,7 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Piggy — your money tracker</title>
+<title>Bacon</title>
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' rx='40' fill='%231D9E75'/%3E%3Ctext y='120' x='90' text-anchor='middle' font-size='100'%3E🐷%3C/text%3E%3C/svg%3E">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Bacon">
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Nunito+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -41,10 +45,8 @@
     font-family: 'Nunito', sans-serif;
   }
 
-  /* LAYOUT */
   .app { max-width: 480px; margin: 0 auto; padding: 0 0 100px; }
 
-  /* TOP BAR */
   .topbar {
     background: var(--card);
     border-bottom: 1px solid var(--border);
@@ -67,15 +69,13 @@
   .logo-text { font-size: 22px; font-weight: 800; color: var(--text); letter-spacing: -0.5px; }
   .logo-sub { font-size: 12px; color: var(--text-muted); font-weight: 400; }
 
-  /* BOTTOM NAV */
   .bottom-nav {
-    position: fixed; bottom: 0; left: 0; right: 0;
+    position: fixed; bottom: 0;
     background: var(--card);
     border-top: 1px solid var(--border);
     display: flex;
     z-index: 50;
-    max-width: 480px;
-    margin: 0 auto;
+    width: 100%; max-width: 480px;
     left: 50%;
     transform: translateX(-50%);
     border-radius: 20px 20px 0 0;
@@ -93,7 +93,6 @@
   .nav-btn .nav-icon { font-size: 22px; line-height: 1; }
   .nav-btn .nav-label { font-weight: 600; letter-spacing: 0.2px; }
 
-  /* SECTIONS */
   .section { display: none; padding: 20px; }
   .section.active { display: block; }
 
@@ -123,9 +122,80 @@
     background: rgba(255,255,255,0.05);
     border-radius: 50%;
   }
+  .balance-top { display: flex; align-items: flex-start; justify-content: space-between; position: relative; z-index: 1; }
   .balance-label { font-size: 13px; opacity: 0.75; margin-bottom: 6px; font-weight: 500; }
   .balance-amount { font-size: 44px; font-weight: 800; letter-spacing: -1px; font-family: 'Nunito', sans-serif; }
-  .balance-sub { font-size: 13px; opacity: 0.65; margin-top: 6px; }
+  .balance-sub { font-size: 13px; opacity: 0.65; margin-top: 6px; position: relative; z-index: 1; }
+
+  /* FILTER DROPDOWN */
+  .filter-btn {
+    background: rgba(255,255,255,0.2);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 20px;
+    padding: 6px 12px;
+    color: white;
+    font-size: 12px; font-weight: 600;
+    font-family: 'Nunito Sans', sans-serif;
+    cursor: pointer;
+    display: flex; align-items: center; gap: 5px;
+    white-space: nowrap;
+    margin-top: 4px;
+  }
+  .filter-btn:hover { background: rgba(255,255,255,0.28); }
+
+  .filter-dropdown {
+    display: none;
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    background: white;
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--border);
+    min-width: 200px;
+    z-index: 100;
+    overflow: hidden;
+  }
+  .filter-dropdown.open { display: block; }
+  .filter-header {
+    padding: 10px 14px 8px;
+    font-size: 11px; font-weight: 700;
+    color: var(--text-muted);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--border);
+  }
+  .filter-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 11px 14px;
+    cursor: pointer;
+    font-size: 14px;
+    color: var(--text);
+    transition: background 0.1s;
+    border-bottom: 1px solid var(--border);
+  }
+  .filter-item:last-child { border-bottom: none; }
+  .filter-item:hover { background: var(--bg); }
+  .filter-check {
+    width: 20px; height: 20px;
+    border-radius: 6px;
+    border: 1.5px solid var(--border-md);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    font-size: 13px;
+    transition: all 0.15s;
+  }
+  .filter-check.checked { background: var(--green); border-color: var(--green); color: white; }
+  .filter-item-icon { font-size: 18px; }
+  .filter-item-name { flex: 1; font-weight: 500; }
+  .filter-item-amt { font-size: 13px; color: var(--text-muted); }
+  .filter-all-btn {
+    padding: 10px 14px;
+    font-size: 13px; color: var(--green); font-weight: 600;
+    cursor: pointer; text-align: center;
+    border-top: 1px solid var(--border);
+    background: var(--green-light);
+  }
 
   /* SECTION HEADER */
   .sec-header {
@@ -149,11 +219,19 @@
     cursor: pointer;
     transition: transform 0.15s, box-shadow 0.15s;
     box-shadow: var(--shadow);
+    position: relative;
   }
   .wallet-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+  .wallet-card.excluded { opacity: 0.45; }
   .wallet-icon-wrap { font-size: 26px; margin-bottom: 10px; }
   .wallet-name { font-size: 12px; color: var(--text-muted); font-weight: 500; margin-bottom: 3px; }
   .wallet-amount { font-size: 20px; font-weight: 800; color: var(--text); }
+  .excluded-badge {
+    position: absolute; top: 10px; right: 10px;
+    font-size: 10px; background: var(--bg); color: var(--text-faint);
+    padding: 2px 7px; border-radius: 10px; font-weight: 600;
+    border: 1px solid var(--border-md);
+  }
 
   .add-wallet-btn {
     border: 1.5px dashed var(--border-md);
@@ -170,7 +248,6 @@
   }
   .add-wallet-btn:hover { background: var(--green-light); border-color: var(--green-mid); color: var(--green-dark); }
 
-  /* RECENT TXNS on home */
   .txn-mini {
     display: flex; align-items: center; gap: 12px;
     padding: 12px 0;
@@ -191,7 +268,6 @@
   .txn-amount.gain { color: var(--green-dark); }
   .txn-amount.spend { color: var(--red-dark); }
 
-  /* CATEGORIES */
   .cat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
   .cat-card {
     background: var(--card);
@@ -206,7 +282,6 @@
   .cat-bar-wrap { height: 5px; background: var(--border); border-radius: 3px; margin-top: 10px; }
   .cat-bar-fill { height: 5px; background: var(--green); border-radius: 3px; transition: width 0.4s ease; }
 
-  /* LOG FORM */
   .form-card {
     background: var(--card);
     border: 1px solid var(--border);
@@ -258,7 +333,6 @@
   .submit-btn:hover { opacity: 0.92; }
   .submit-btn:active { transform: scale(0.98); }
 
-  /* HISTORY */
   .txn-full {
     display: flex; align-items: center; gap: 12px;
     background: var(--card);
@@ -270,7 +344,6 @@
   }
   .txn-full .txn-dot { width: 44px; height: 44px; font-size: 20px; border-radius: 13px; }
 
-  /* MODALS */
   .modal-overlay {
     display: none; position: fixed; inset: 0;
     background: rgba(0,0,0,0.35);
@@ -330,6 +403,8 @@
     transition: color 0.15s;
   }
   .delete-btn:hover { color: var(--red-dark); }
+
+  .balance-wrapper { position: relative; }
 </style>
 </head>
 <body>
@@ -338,20 +413,34 @@
   <div class="topbar">
     <div class="logo-icon">🐷</div>
     <div>
-      <div class="logo-text">Piggy</div>
+      <div class="logo-text">Bacon</div>
       <div class="logo-sub">your money tracker</div>
     </div>
   </div>
 
   <!-- HOME -->
   <div id="tab-home" class="section active">
-    <div class="balance-card">
-      <div class="balance-label">total balance</div>
-      <div class="balance-amount" id="total-display">$0.00</div>
-      <div class="balance-sub" id="wallet-count-sub">add your first wallet to get started</div>
+    <div class="balance-wrapper">
+      <div class="balance-card">
+        <div class="balance-top">
+          <div>
+            <div class="balance-label">total balance</div>
+            <div class="balance-amount" id="total-display">$0.00</div>
+          </div>
+          <button class="filter-btn" onclick="toggleFilter(event)" id="filter-btn">
+            <span id="filter-label">all wallets</span> ▾
+          </button>
+        </div>
+        <div class="balance-sub" id="wallet-count-sub">add your first wallet to get started</div>
+      </div>
+      <div class="filter-dropdown" id="filter-dropdown">
+        <div class="filter-header">include in total</div>
+        <div id="filter-list"></div>
+        <div class="filter-all-btn" onclick="toggleAllWallets()">select / deselect all</div>
+      </div>
     </div>
 
-    <div class="sec-header">
+    <div class="sec-header" style="margin-top:20px">
       <div class="sec-title">my wallets</div>
       <button class="sec-action" onclick="openWalletModal()">+ add</button>
     </div>
@@ -411,7 +500,6 @@
     <div id="txn-full-list"></div>
   </div>
 
-  <!-- BOTTOM NAV -->
   <nav class="bottom-nav">
     <button class="nav-btn active" onclick="switchTab('home')" id="nav-home">
       <span class="nav-icon">🏠</span>
@@ -507,17 +595,19 @@
 <div class="toast" id="toast"></div>
 
 <script>
-  // STATE
-  let wallets = JSON.parse(localStorage.getItem('piggy_wallets') || '[]');
-  let categories = JSON.parse(localStorage.getItem('piggy_cats') || '[]');
-  let transactions = JSON.parse(localStorage.getItem('piggy_txns') || '[]');
+  let wallets = JSON.parse(localStorage.getItem('bacon_wallets') || '[]');
+  let categories = JSON.parse(localStorage.getItem('bacon_cats') || '[]');
+  let transactions = JSON.parse(localStorage.getItem('bacon_txns') || '[]');
+  // excluded wallets = set of wallet names excluded from total
+  let excludedWallets = new Set(JSON.parse(localStorage.getItem('bacon_excluded') || '[]'));
   let logType = 'spend';
   let editWalletIdx = null;
 
   function save() {
-    localStorage.setItem('piggy_wallets', JSON.stringify(wallets));
-    localStorage.setItem('piggy_cats', JSON.stringify(categories));
-    localStorage.setItem('piggy_txns', JSON.stringify(transactions));
+    localStorage.setItem('bacon_wallets', JSON.stringify(wallets));
+    localStorage.setItem('bacon_cats', JSON.stringify(categories));
+    localStorage.setItem('bacon_txns', JSON.stringify(transactions));
+    localStorage.setItem('bacon_excluded', JSON.stringify([...excludedWallets]));
   }
 
   function showToast(msg) {
@@ -525,6 +615,70 @@
     t.textContent = msg;
     t.classList.add('show');
     setTimeout(() => t.classList.remove('show'), 2200);
+  }
+
+  // FILTER DROPDOWN
+  function toggleFilter(e) {
+    e.stopPropagation();
+    const dd = document.getElementById('filter-dropdown');
+    dd.classList.toggle('open');
+    if (dd.classList.contains('open')) renderFilterList();
+  }
+
+  document.addEventListener('click', () => {
+    document.getElementById('filter-dropdown').classList.remove('open');
+  });
+
+  function renderFilterList() {
+    const list = document.getElementById('filter-list');
+    if (!wallets.length) {
+      list.innerHTML = '<div style="padding:12px 14px;font-size:13px;color:var(--text-muted)">no wallets yet</div>';
+      return;
+    }
+    list.innerHTML = wallets.map((w, i) => {
+      const included = !excludedWallets.has(w.name);
+      return `<div class="filter-item" onclick="toggleWalletFilter('${w.name.replace(/'/g,"\\'")}', event)">
+        <div class="filter-check ${included ? 'checked' : ''}">
+          ${included ? '✓' : ''}
+        </div>
+        <span class="filter-item-icon">${w.icon}</span>
+        <span class="filter-item-name">${w.name}</span>
+        <span class="filter-item-amt">$${w.amount.toFixed(2)}</span>
+      </div>`;
+    }).join('');
+  }
+
+  function toggleWalletFilter(name, e) {
+    e.stopPropagation();
+    if (excludedWallets.has(name)) excludedWallets.delete(name);
+    else excludedWallets.add(name);
+    save();
+    renderFilterList();
+    updateTotal();
+  }
+
+  function toggleAllWallets() {
+    const anyExcluded = excludedWallets.size > 0;
+    if (anyExcluded) {
+      excludedWallets.clear();
+    } else {
+      wallets.forEach(w => excludedWallets.add(w.name));
+    }
+    save();
+    renderFilterList();
+    updateTotal();
+  }
+
+  function updateTotal() {
+    const included = wallets.filter(w => !excludedWallets.has(w.name));
+    const total = included.reduce((s, w) => s + w.amount, 0);
+    document.getElementById('total-display').textContent = '$' + total.toFixed(2);
+    const excCount = excludedWallets.size;
+    const lbl = document.getElementById('filter-label');
+    lbl.textContent = excCount === 0 ? 'all wallets' : (wallets.length - excCount) + ' of ' + wallets.length;
+    const sub = wallets.length === 0 ? 'add your first wallet to get started' :
+      included.length + ' of ' + wallets.length + ' wallet' + (wallets.length > 1 ? 's' : '') + ' included';
+    document.getElementById('wallet-count-sub').textContent = sub;
   }
 
   // TABS
@@ -566,7 +720,6 @@
     document.getElementById(id).classList.remove('open');
   }
 
-  // Close modal on overlay click
   document.querySelectorAll('.modal-overlay').forEach(o => {
     o.addEventListener('click', e => { if (e.target === o) closeModal(o.id); });
   });
@@ -575,7 +728,6 @@
     document.querySelectorAll('#' + rowId + ' .ep').forEach(e => {
       e.classList.toggle('sel', e.dataset.e === selected);
     });
-    // Default to first if none selected
     const row = document.getElementById(rowId);
     if (!row.querySelector('.ep.sel')) row.querySelector('.ep').classList.add('sel');
   }
@@ -600,6 +752,10 @@
     const icon = getSelectedEmoji('wallet-emoji-row');
     if (!name) { showToast('please enter a name!'); return; }
     if (editWalletIdx !== null) {
+      const oldName = wallets[editWalletIdx].name;
+      if (oldName !== name) {
+        if (excludedWallets.has(oldName)) { excludedWallets.delete(oldName); excludedWallets.add(name); }
+      }
       wallets[editWalletIdx] = { ...wallets[editWalletIdx], name, icon, amount };
       showToast('wallet updated!');
     } else {
@@ -614,6 +770,7 @@
   function deleteWallet(idx, e) {
     e.stopPropagation();
     if (!confirm('delete this wallet?')) return;
+    excludedWallets.delete(wallets[idx].name);
     wallets.splice(idx, 1);
     save();
     renderHome();
@@ -688,7 +845,6 @@
   function deleteTransaction(idx) {
     if (!confirm('delete this transaction?')) return;
     const t = transactions[idx];
-    // Reverse the balance change
     const wIdx = wallets.findIndex(w => w.name === t.wallet);
     if (wIdx !== -1) {
       if (t.type === 'spend') wallets[wIdx].amount += t.amount;
@@ -703,23 +859,20 @@
 
   // RENDER
   function renderHome() {
-    const total = wallets.reduce((s, w) => s + w.amount, 0);
-    document.getElementById('total-display').textContent = '$' + total.toFixed(2);
-    const sub = wallets.length === 0 ? 'add your first wallet to get started' :
-      wallets.length + ' wallet' + (wallets.length > 1 ? 's' : '');
-    document.getElementById('wallet-count-sub').textContent = sub;
-
+    updateTotal();
     const grid = document.getElementById('wallets-grid-home');
-    grid.innerHTML = wallets.map((w, i) => `
-      <div class="wallet-card" onclick="openWalletModal(${i})">
+    grid.innerHTML = wallets.map((w, i) => {
+      const excluded = excludedWallets.has(w.name);
+      return `<div class="wallet-card ${excluded ? 'excluded' : ''}" onclick="openWalletModal(${i})">
         <div style="display:flex;justify-content:space-between;align-items:flex-start">
           <div class="wallet-icon-wrap">${w.icon}</div>
           <button class="delete-btn" onclick="deleteWallet(${i}, event)" title="delete">×</button>
         </div>
         <div class="wallet-name">${w.name}</div>
         <div class="wallet-amount">$${w.amount.toFixed(2)}</div>
-      </div>
-    `).join('');
+        ${excluded ? '<div class="excluded-badge">excluded</div>' : ''}
+      </div>`;
+    }).join('');
 
     document.getElementById('add-wallet-empty').style.display = wallets.length > 0 ? 'none' : 'flex';
 
@@ -790,7 +943,6 @@
     }).join('');
   }
 
-  // INIT
   renderHome();
 </script>
 </body>
