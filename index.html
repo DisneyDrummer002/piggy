@@ -11,404 +11,132 @@
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Nunito+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   :root {
-    --green: #1D9E75;
-    --green-light: #E1F5EE;
-    --green-mid: #9FE1CB;
-    --green-dark: #0F6E56;
-    --red-light: #FAECE7;
-    --red: #D85A30;
-    --red-dark: #993C1D;
-    --bg: #F7F5F0;
-    --card: #FFFFFF;
-    --border: rgba(0,0,0,0.08);
-    --border-md: rgba(0,0,0,0.14);
-    --text: #1a1a1a;
-    --text-muted: #6b6b6b;
-    --text-faint: #a0a0a0;
-    --radius: 16px;
-    --radius-sm: 10px;
-    --shadow: 0 2px 12px rgba(0,0,0,0.07);
-    --shadow-lg: 0 8px 32px rgba(0,0,0,0.12);
+    --green: #1D9E75; --green-light: #E1F5EE; --green-mid: #9FE1CB; --green-dark: #0F6E56;
+    --red-light: #FAECE7; --red: #D85A30; --red-dark: #993C1D;
+    --blue-light: #EAF2FF; --blue: #3B82F6; --blue-dark: #1D4ED8;
+    --bg: #F7F5F0; --card: #FFFFFF; --border: rgba(0,0,0,0.08); --border-md: rgba(0,0,0,0.14);
+    --text: #1a1a1a; --text-muted: #6b6b6b; --text-faint: #a0a0a0;
+    --radius: 16px; --radius-sm: 10px;
+    --shadow: 0 2px 12px rgba(0,0,0,0.07); --shadow-lg: 0 8px 32px rgba(0,0,0,0.12);
   }
-
-  body {
-    font-family: 'Nunito Sans', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
-    font-size: 15px;
-  }
-
-  h1, h2, h3, .logo-text, .total-amount, .wallet-amount {
-    font-family: 'Nunito', sans-serif;
-  }
-
+  body { font-family: 'Nunito Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; font-size: 15px; }
+  h1,h2,h3,.logo-text,.wallet-amount { font-family: 'Nunito', sans-serif; }
   .app { max-width: 480px; margin: 0 auto; padding: 0 0 100px; }
-
-  .topbar {
-    background: var(--card);
-    border-bottom: 1px solid var(--border);
-    padding: 18px 20px 14px;
-    position: sticky;
-    top: 0;
-    z-index: 50;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-  .logo-icon {
-    width: 40px; height: 40px;
-    background: linear-gradient(135deg, #5DCAA5, #1D9E75);
-    border-radius: 12px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 20px;
-    box-shadow: 0 2px 8px rgba(29,158,117,0.3);
-  }
+  .topbar { background: var(--card); border-bottom: 1px solid var(--border); padding: 18px 20px 14px; position: sticky; top: 0; z-index: 50; display: flex; align-items: center; gap: 12px; }
+  .logo-icon { width: 40px; height: 40px; background: linear-gradient(135deg,#5DCAA5,#1D9E75); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 20px; box-shadow: 0 2px 8px rgba(29,158,117,0.3); }
   .logo-text { font-size: 22px; font-weight: 800; color: var(--text); letter-spacing: -0.5px; }
   .logo-sub { font-size: 12px; color: var(--text-muted); font-weight: 400; }
-
-  .bottom-nav {
-    position: fixed; bottom: 0;
-    background: var(--card);
-    border-top: 1px solid var(--border);
-    display: flex;
-    z-index: 50;
-    width: 100%; max-width: 480px;
-    left: 50%;
-    transform: translateX(-50%);
-    border-radius: 20px 20px 0 0;
-    box-shadow: 0 -4px 20px rgba(0,0,0,0.08);
-  }
-  .nav-btn {
-    flex: 1; padding: 12px 4px 10px;
-    display: flex; flex-direction: column; align-items: center; gap: 4px;
-    cursor: pointer; border: none; background: transparent;
-    font-family: 'Nunito Sans', sans-serif;
-    font-size: 11px; color: var(--text-faint);
-    transition: color 0.15s;
-  }
+  .bottom-nav { position: fixed; bottom: 0; background: var(--card); border-top: 1px solid var(--border); display: flex; z-index: 50; width: 100%; max-width: 480px; left: 50%; transform: translateX(-50%); border-radius: 20px 20px 0 0; box-shadow: 0 -4px 20px rgba(0,0,0,0.08); }
+  .nav-btn { flex: 1; padding: 12px 4px 10px; display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer; border: none; background: transparent; font-family: 'Nunito Sans', sans-serif; font-size: 11px; color: var(--text-faint); transition: color 0.15s; }
   .nav-btn.active { color: var(--green); }
   .nav-btn .nav-icon { font-size: 22px; line-height: 1; }
   .nav-btn .nav-label { font-weight: 600; letter-spacing: 0.2px; }
-
   .section { display: none; padding: 20px; }
   .section.active { display: block; }
-
-  /* BALANCE CARD */
-  .balance-card {
-    background: linear-gradient(135deg, #1D9E75 0%, #0F6E56 100%);
-    border-radius: var(--radius);
-    padding: 24px 24px 20px;
-    margin-bottom: 20px;
-    color: white;
-    position: relative;
-    overflow: hidden;
-  }
-  .balance-card::before {
-    content: '';
-    position: absolute;
-    top: -30px; right: -30px;
-    width: 140px; height: 140px;
-    background: rgba(255,255,255,0.07);
-    border-radius: 50%;
-  }
-  .balance-card::after {
-    content: '';
-    position: absolute;
-    bottom: -50px; right: 40px;
-    width: 180px; height: 180px;
-    background: rgba(255,255,255,0.05);
-    border-radius: 50%;
-  }
-  .balance-top { display: flex; align-items: flex-start; justify-content: space-between; position: relative; z-index: 1; }
-  .balance-label { font-size: 13px; opacity: 0.75; margin-bottom: 6px; font-weight: 500; }
-  .balance-amount { font-size: 44px; font-weight: 800; letter-spacing: -1px; font-family: 'Nunito', sans-serif; }
-  .balance-sub { font-size: 13px; opacity: 0.65; margin-top: 6px; position: relative; z-index: 1; }
-
-  /* FILTER DROPDOWN */
-  .filter-btn {
-    background: rgba(255,255,255,0.2);
-    border: 1px solid rgba(255,255,255,0.3);
-    border-radius: 20px;
-    padding: 6px 12px;
-    color: white;
-    font-size: 12px; font-weight: 600;
-    font-family: 'Nunito Sans', sans-serif;
-    cursor: pointer;
-    display: flex; align-items: center; gap: 5px;
-    white-space: nowrap;
-    margin-top: 4px;
-  }
-  .filter-btn:hover { background: rgba(255,255,255,0.28); }
-
-  .filter-dropdown {
-    display: none;
-    position: absolute;
-    top: calc(100% + 8px);
-    right: 0;
-    background: white;
-    border-radius: var(--radius-sm);
-    box-shadow: var(--shadow-lg);
-    border: 1px solid var(--border);
-    min-width: 200px;
-    z-index: 100;
-    overflow: hidden;
-  }
-  .filter-dropdown.open { display: block; }
-  .filter-header {
-    padding: 10px 14px 8px;
-    font-size: 11px; font-weight: 700;
-    color: var(--text-muted);
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-    border-bottom: 1px solid var(--border);
-  }
-  .filter-item {
-    display: flex; align-items: center; gap: 10px;
-    padding: 11px 14px;
-    cursor: pointer;
-    font-size: 14px;
-    color: var(--text);
-    transition: background 0.1s;
-    border-bottom: 1px solid var(--border);
-  }
-  .filter-item:last-child { border-bottom: none; }
-  .filter-item:hover { background: var(--bg); }
-  .filter-check {
-    width: 20px; height: 20px;
-    border-radius: 6px;
-    border: 1.5px solid var(--border-md);
-    display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0;
-    font-size: 13px;
-    transition: all 0.15s;
-  }
-  .filter-check.checked { background: var(--green); border-color: var(--green); color: white; }
-  .filter-item-icon { font-size: 18px; }
-  .filter-item-name { flex: 1; font-weight: 500; }
-  .filter-item-amt { font-size: 13px; color: var(--text-muted); }
-  .filter-all-btn {
-    padding: 10px 14px;
-    font-size: 13px; color: var(--green); font-weight: 600;
-    cursor: pointer; text-align: center;
-    border-top: 1px solid var(--border);
-    background: var(--green-light);
-  }
-
-  /* SECTION HEADER */
-  .sec-header {
-    display: flex; align-items: center; justify-content: space-between;
-    margin-bottom: 14px;
-  }
-  .sec-title { font-size: 16px; font-weight: 700; font-family: 'Nunito', sans-serif; }
-  .sec-action {
-    font-size: 13px; color: var(--green); font-weight: 600;
-    cursor: pointer; border: none; background: none;
-    font-family: 'Nunito Sans', sans-serif;
-  }
-
-  /* WALLET CARDS */
-  .wallets-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
-  .wallet-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 16px;
-    cursor: pointer;
-    transition: transform 0.15s, box-shadow 0.15s;
-    box-shadow: var(--shadow);
-    position: relative;
-  }
-  .wallet-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
-  .wallet-card.excluded { opacity: 0.45; }
-  .wallet-icon-wrap { font-size: 26px; margin-bottom: 10px; }
-  .wallet-name { font-size: 12px; color: var(--text-muted); font-weight: 500; margin-bottom: 3px; }
-  .wallet-amount { font-size: 20px; font-weight: 800; color: var(--text); }
-  .excluded-badge {
-    position: absolute; top: 10px; right: 10px;
-    font-size: 10px; background: var(--bg); color: var(--text-faint);
-    padding: 2px 7px; border-radius: 10px; font-weight: 600;
-    border: 1px solid var(--border-md);
-  }
-
-  .add-wallet-btn {
-    border: 1.5px dashed var(--border-md);
-    background: transparent;
-    border-radius: var(--radius);
-    padding: 16px;
-    cursor: pointer;
-    font-size: 13px; color: var(--text-muted);
-    width: 100%;
-    font-family: 'Nunito Sans', sans-serif;
-    font-weight: 500;
-    transition: all 0.15s;
-    display: flex; align-items: center; justify-content: center; gap: 8px;
-  }
-  .add-wallet-btn:hover { background: var(--green-light); border-color: var(--green-mid); color: var(--green-dark); }
-
-  .txn-mini {
-    display: flex; align-items: center; gap: 12px;
-    padding: 12px 0;
-    border-bottom: 1px solid var(--border);
-  }
-  .txn-mini:last-child { border-bottom: none; }
-  .txn-dot {
-    width: 40px; height: 40px; border-radius: 12px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 18px; flex-shrink: 0;
-  }
-  .txn-dot.spend { background: var(--red-light); }
-  .txn-dot.gain { background: var(--green-light); }
-  .txn-info { flex: 1; min-width: 0; }
-  .txn-desc { font-size: 14px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .txn-meta { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
-  .txn-amount { font-size: 15px; font-weight: 700; flex-shrink: 0; }
-  .txn-amount.gain { color: var(--green-dark); }
-  .txn-amount.spend { color: var(--red-dark); }
-
-  .cat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
-  .cat-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 16px;
-    box-shadow: var(--shadow);
-  }
-  .cat-emoji { font-size: 26px; margin-bottom: 8px; }
-  .cat-name { font-size: 14px; font-weight: 700; font-family: 'Nunito', sans-serif; }
-  .cat-spent { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
-  .cat-bar-wrap { height: 5px; background: var(--border); border-radius: 3px; margin-top: 10px; }
-  .cat-bar-fill { height: 5px; background: var(--green); border-radius: 3px; transition: width 0.4s ease; }
-
-  .form-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 20px;
-    box-shadow: var(--shadow);
-  }
-  .type-toggle { display: flex; gap: 8px; margin-bottom: 18px; }
-  .type-btn {
-    flex: 1; padding: 10px 8px;
-    border-radius: var(--radius-sm);
-    border: 1.5px solid var(--border-md);
-    background: transparent;
-    cursor: pointer;
-    font-size: 14px; font-weight: 600;
-    font-family: 'Nunito', sans-serif;
-    color: var(--text-muted);
-    transition: all 0.15s;
-  }
-  .type-btn.active-spend { background: var(--red-light); border-color: var(--red); color: var(--red-dark); }
-  .type-btn.active-gain { background: var(--green-light); border-color: var(--green); color: var(--green-dark); }
-
-  .form-group { margin-bottom: 16px; }
-  .form-label { display: block; font-size: 12px; font-weight: 600; color: var(--text-muted); margin-bottom: 7px; letter-spacing: 0.4px; text-transform: uppercase; }
-  .form-input {
-    width: 100%; padding: 11px 14px;
-    font-size: 15px; font-family: 'Nunito Sans', sans-serif;
-    border: 1.5px solid var(--border-md);
-    border-radius: var(--radius-sm);
-    background: var(--bg);
-    color: var(--text);
-    transition: border-color 0.15s;
-    -webkit-appearance: none;
-  }
-  .form-input:focus { outline: none; border-color: var(--green); background: white; }
-  select.form-input { cursor: pointer; }
-
-  .submit-btn {
-    width: 100%; padding: 14px;
-    background: var(--green);
-    color: white; border: none;
-    border-radius: var(--radius-sm);
-    font-size: 16px; font-weight: 700;
-    font-family: 'Nunito', sans-serif;
-    cursor: pointer;
-    transition: opacity 0.15s, transform 0.1s;
-    margin-top: 4px;
-  }
-  .submit-btn:hover { opacity: 0.92; }
-  .submit-btn:active { transform: scale(0.98); }
-
-  .txn-full {
-    display: flex; align-items: center; gap: 12px;
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 14px 16px;
-    margin-bottom: 10px;
-    box-shadow: var(--shadow);
-  }
-  .txn-full .txn-dot { width: 44px; height: 44px; font-size: 20px; border-radius: 13px; }
-
-  .modal-overlay {
-    display: none; position: fixed; inset: 0;
-    background: rgba(0,0,0,0.35);
-    z-index: 200;
-    align-items: flex-end;
-    justify-content: center;
-  }
-  .modal-overlay.open { display: flex; }
-  .modal-sheet {
-    background: var(--card);
-    border-radius: 24px 24px 0 0;
-    padding: 24px 20px 32px;
-    width: 100%; max-width: 480px;
-    animation: slideUp 0.25s ease;
-  }
-  @keyframes slideUp {
-    from { transform: translateY(40px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
-  }
-  .modal-handle { width: 40px; height: 4px; background: var(--border-md); border-radius: 2px; margin: 0 auto 20px; }
-  .modal-title { font-size: 18px; font-weight: 800; font-family: 'Nunito', sans-serif; margin-bottom: 18px; }
-
-  .emoji-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
-  .ep { font-size: 24px; padding: 6px 8px; border-radius: var(--radius-sm); cursor: pointer; border: 2px solid transparent; transition: all 0.1s; }
-  .ep.sel { border-color: var(--green); background: var(--green-light); }
-
-  .modal-btns { display: flex; gap: 10px; margin-top: 20px; }
-  .btn-cancel {
-    flex: 1; padding: 12px; border-radius: var(--radius-sm);
-    border: 1.5px solid var(--border-md); background: transparent;
-    color: var(--text-muted); font-size: 15px; font-weight: 600;
-    font-family: 'Nunito', sans-serif; cursor: pointer;
-  }
-  .btn-save {
-    flex: 2; padding: 12px; border-radius: var(--radius-sm);
-    border: none; background: var(--green);
-    color: white; font-size: 15px; font-weight: 700;
-    font-family: 'Nunito', sans-serif; cursor: pointer;
-  }
-
-  .empty-msg { text-align: center; padding: 32px 20px; color: var(--text-muted); font-size: 14px; }
-  .empty-emoji { font-size: 40px; display: block; margin-bottom: 12px; }
-
-  .toast {
-    position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%);
-    background: #1a1a1a; color: white;
-    padding: 10px 20px; border-radius: 40px;
-    font-size: 14px; font-weight: 600; font-family: 'Nunito', sans-serif;
-    z-index: 300; opacity: 0; transition: opacity 0.2s;
-    white-space: nowrap;
-  }
-  .toast.show { opacity: 1; }
-
-  .delete-btn {
-    background: none; border: none; cursor: pointer;
-    color: var(--text-faint); font-size: 18px; padding: 4px;
-    transition: color 0.15s;
-  }
-  .delete-btn:hover { color: var(--red-dark); }
-
-  .balance-wrapper { position: relative; }
+  .balance-card { background: linear-gradient(135deg,#1D9E75 0%,#0F6E56 100%); border-radius: var(--radius); padding: 24px 24px 20px; margin-bottom: 20px; color: white; position: relative; overflow: hidden; }
+  .balance-card::before { content:''; position:absolute; top:-30px; right:-30px; width:140px; height:140px; background:rgba(255,255,255,0.07); border-radius:50%; }
+  .balance-card::after { content:''; position:absolute; bottom:-50px; right:40px; width:180px; height:180px; background:rgba(255,255,255,0.05); border-radius:50%; }
+  .balance-top { display:flex; align-items:flex-start; justify-content:space-between; position:relative; z-index:1; }
+  .balance-label { font-size:13px; opacity:0.75; margin-bottom:6px; font-weight:500; }
+  .balance-amount { font-size:44px; font-weight:800; letter-spacing:-1px; font-family:'Nunito',sans-serif; }
+  .balance-sub { font-size:13px; opacity:0.65; margin-top:6px; position:relative; z-index:1; }
+  .filter-btn { background:rgba(255,255,255,0.2); border:1px solid rgba(255,255,255,0.3); border-radius:20px; padding:6px 12px; color:white; font-size:12px; font-weight:600; font-family:'Nunito Sans',sans-serif; cursor:pointer; display:flex; align-items:center; gap:5px; white-space:nowrap; margin-top:4px; }
+  .filter-btn:hover { background:rgba(255,255,255,0.28); }
+  .filter-dropdown { display:none; position:absolute; top:calc(100% + 8px); right:0; background:white; border-radius:var(--radius-sm); box-shadow:var(--shadow-lg); border:1px solid var(--border); min-width:210px; z-index:100; overflow:hidden; }
+  .filter-dropdown.open { display:block; }
+  .filter-header { padding:10px 14px 8px; font-size:11px; font-weight:700; color:var(--text-muted); letter-spacing:0.5px; text-transform:uppercase; border-bottom:1px solid var(--border); }
+  .filter-item { display:flex; align-items:center; gap:10px; padding:11px 14px; cursor:pointer; font-size:14px; color:var(--text); transition:background 0.1s; border-bottom:1px solid var(--border); }
+  .filter-item:last-child { border-bottom:none; }
+  .filter-item:hover { background:var(--bg); }
+  .filter-check { width:20px; height:20px; border-radius:6px; border:1.5px solid var(--border-md); display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:13px; transition:all 0.15s; }
+  .filter-check.checked { background:var(--green); border-color:var(--green); color:white; }
+  .filter-item-icon { font-size:18px; }
+  .filter-item-name { flex:1; font-weight:500; }
+  .filter-item-amt { font-size:13px; color:var(--text-muted); }
+  .filter-all-btn { padding:10px 14px; font-size:13px; color:var(--green); font-weight:600; cursor:pointer; text-align:center; border-top:1px solid var(--border); background:var(--green-light); }
+  .sec-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; }
+  .sec-title { font-size:16px; font-weight:700; font-family:'Nunito',sans-serif; }
+  .sec-action { font-size:13px; color:var(--green); font-weight:600; cursor:pointer; border:none; background:none; font-family:'Nunito Sans',sans-serif; }
+  .wallets-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:12px; }
+  .wallet-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:16px; cursor:pointer; transition:transform 0.15s,box-shadow 0.15s; box-shadow:var(--shadow); position:relative; }
+  .wallet-card:hover { transform:translateY(-2px); box-shadow:var(--shadow-lg); }
+  .wallet-card.excluded { opacity:0.45; }
+  .wallet-icon-wrap { font-size:26px; margin-bottom:10px; }
+  .wallet-name { font-size:12px; color:var(--text-muted); font-weight:500; margin-bottom:3px; }
+  .wallet-amount { font-size:20px; font-weight:800; color:var(--text); }
+  .excluded-badge { position:absolute; top:10px; right:10px; font-size:10px; background:var(--bg); color:var(--text-faint); padding:2px 7px; border-radius:10px; font-weight:600; border:1px solid var(--border-md); }
+  .add-wallet-btn { border:1.5px dashed var(--border-md); background:transparent; border-radius:var(--radius); padding:16px; cursor:pointer; font-size:13px; color:var(--text-muted); width:100%; font-family:'Nunito Sans',sans-serif; font-weight:500; transition:all 0.15s; display:flex; align-items:center; justify-content:center; gap:8px; }
+  .add-wallet-btn:hover { background:var(--green-light); border-color:var(--green-mid); color:var(--green-dark); }
+  .quick-actions { display:flex; gap:10px; margin-bottom:20px; }
+  .quick-btn { flex:1; padding:12px 8px; border-radius:var(--radius-sm); border:1px solid var(--border); background:var(--card); font-size:13px; font-weight:600; font-family:'Nunito',sans-serif; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:6px; box-shadow:var(--shadow); transition:all 0.15s; color:var(--text); }
+  .quick-btn:hover { transform:translateY(-1px); box-shadow:var(--shadow-lg); }
+  .quick-btn.transfer { color:var(--blue-dark); background:var(--blue-light); border-color:rgba(59,130,246,0.2); }
+  .txn-mini { display:flex; align-items:center; gap:12px; padding:12px 0; border-bottom:1px solid var(--border); }
+  .txn-mini:last-child { border-bottom:none; }
+  .txn-dot { width:40px; height:40px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0; }
+  .txn-dot.spend { background:var(--red-light); }
+  .txn-dot.gain { background:var(--green-light); }
+  .txn-dot.transfer { background:var(--blue-light); }
+  .txn-info { flex:1; min-width:0; }
+  .txn-desc { font-size:14px; font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .txn-meta { font-size:12px; color:var(--text-muted); margin-top:2px; }
+  .txn-amount { font-size:15px; font-weight:700; flex-shrink:0; }
+  .txn-amount.gain { color:var(--green-dark); }
+  .txn-amount.spend { color:var(--red-dark); }
+  .txn-amount.transfer { color:var(--blue-dark); }
+  .cat-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:12px; }
+  .cat-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:16px; box-shadow:var(--shadow); }
+  .cat-emoji { font-size:26px; margin-bottom:8px; }
+  .cat-name { font-size:14px; font-weight:700; font-family:'Nunito',sans-serif; }
+  .cat-spent { font-size:12px; color:var(--text-muted); margin-top:2px; }
+  .cat-bar-wrap { height:5px; background:var(--border); border-radius:3px; margin-top:10px; }
+  .cat-bar-fill { height:5px; background:var(--green); border-radius:3px; transition:width 0.4s ease; }
+  .form-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px; box-shadow:var(--shadow); }
+  .type-toggle { display:flex; gap:8px; margin-bottom:18px; }
+  .type-btn { flex:1; padding:10px 8px; border-radius:var(--radius-sm); border:1.5px solid var(--border-md); background:transparent; cursor:pointer; font-size:13px; font-weight:600; font-family:'Nunito',sans-serif; color:var(--text-muted); transition:all 0.15s; }
+  .type-btn.active-spend { background:var(--red-light); border-color:var(--red); color:var(--red-dark); }
+  .type-btn.active-gain { background:var(--green-light); border-color:var(--green); color:var(--green-dark); }
+  .form-group { margin-bottom:16px; }
+  .form-label { display:block; font-size:12px; font-weight:600; color:var(--text-muted); margin-bottom:7px; letter-spacing:0.4px; text-transform:uppercase; }
+  .form-input { width:100%; padding:11px 14px; font-size:15px; font-family:'Nunito Sans',sans-serif; border:1.5px solid var(--border-md); border-radius:var(--radius-sm); background:var(--bg); color:var(--text); transition:border-color 0.15s; -webkit-appearance:none; }
+  .form-input:focus { outline:none; border-color:var(--green); background:white; }
+  select.form-input { cursor:pointer; }
+  .submit-btn { width:100%; padding:14px; background:var(--green); color:white; border:none; border-radius:var(--radius-sm); font-size:16px; font-weight:700; font-family:'Nunito',sans-serif; cursor:pointer; transition:opacity 0.15s,transform 0.1s; margin-top:4px; }
+  .submit-btn:hover { opacity:0.92; }
+  .submit-btn:active { transform:scale(0.98); }
+  .submit-btn.blue { background:var(--blue); }
+  .txn-full { display:flex; align-items:center; gap:12px; background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:14px 16px; margin-bottom:10px; box-shadow:var(--shadow); }
+  .txn-full .txn-dot { width:44px; height:44px; font-size:20px; border-radius:13px; }
+  .modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.35); z-index:200; align-items:flex-end; justify-content:center; }
+  .modal-overlay.open { display:flex; }
+  .modal-sheet { background:var(--card); border-radius:24px 24px 0 0; padding:24px 20px 32px; width:100%; max-width:480px; animation:slideUp 0.25s ease; max-height:90vh; overflow-y:auto; }
+  @keyframes slideUp { from{transform:translateY(40px);opacity:0} to{transform:translateY(0);opacity:1} }
+  .modal-handle { width:40px; height:4px; background:var(--border-md); border-radius:2px; margin:0 auto 20px; }
+  .modal-title { font-size:18px; font-weight:800; font-family:'Nunito',sans-serif; margin-bottom:18px; }
+  .emoji-section-label { font-size:11px; font-weight:700; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.5px; margin:12px 0 6px; }
+  .emoji-row { display:flex; flex-wrap:wrap; gap:4px; }
+  .ep { font-size:22px; padding:5px 6px; border-radius:var(--radius-sm); cursor:pointer; border:2px solid transparent; transition:all 0.1s; }
+  .ep.sel { border-color:var(--green); background:var(--green-light); }
+  .ep:hover { background:var(--bg); }
+  .modal-btns { display:flex; gap:10px; margin-top:20px; }
+  .btn-cancel { flex:1; padding:12px; border-radius:var(--radius-sm); border:1.5px solid var(--border-md); background:transparent; color:var(--text-muted); font-size:15px; font-weight:600; font-family:'Nunito',sans-serif; cursor:pointer; }
+  .btn-save { flex:2; padding:12px; border-radius:var(--radius-sm); border:none; background:var(--green); color:white; font-size:15px; font-weight:700; font-family:'Nunito',sans-serif; cursor:pointer; }
+  .btn-save.blue { background:var(--blue); }
+  .wallet-edit-actions { display:flex; gap:8px; margin-bottom:10px; }
+  .wedit-btn { flex:1; padding:9px 4px; border-radius:var(--radius-sm); border:1.5px solid var(--border-md); background:transparent; font-size:11px; font-weight:600; font-family:'Nunito',sans-serif; cursor:pointer; color:var(--text-muted); transition:all 0.15s; text-align:center; }
+  .wedit-btn.active { background:var(--green-light); border-color:var(--green); color:var(--green-dark); }
+  .amount-hint { font-size:12px; color:var(--text-muted); margin-top:6px; }
+  .empty-msg { text-align:center; padding:32px 20px; color:var(--text-muted); font-size:14px; }
+  .empty-emoji { font-size:40px; display:block; margin-bottom:12px; }
+  .toast { position:fixed; bottom:90px; left:50%; transform:translateX(-50%); background:#1a1a1a; color:white; padding:10px 20px; border-radius:40px; font-size:14px; font-weight:600; font-family:'Nunito',sans-serif; z-index:300; opacity:0; transition:opacity 0.2s; white-space:nowrap; }
+  .toast.show { opacity:1; }
+  .delete-btn { background:none; border:none; cursor:pointer; color:var(--text-faint); font-size:18px; padding:4px; transition:color 0.15s; }
+  .delete-btn:hover { color:var(--red-dark); }
+  .balance-wrapper { position:relative; }
 </style>
 </head>
 <body>
-
 <div class="app">
   <div class="topbar">
     <div class="logo-icon">🐷</div>
@@ -427,9 +155,7 @@
             <div class="balance-label">total balance</div>
             <div class="balance-amount" id="total-display">$0.00</div>
           </div>
-          <button class="filter-btn" onclick="toggleFilter(event)" id="filter-btn">
-            <span id="filter-label">all wallets</span> ▾
-          </button>
+          <button class="filter-btn" onclick="toggleFilter(event)"><span id="filter-label">all wallets</span> ▾</button>
         </div>
         <div class="balance-sub" id="wallet-count-sub">add your first wallet to get started</div>
       </div>
@@ -439,16 +165,15 @@
         <div class="filter-all-btn" onclick="toggleAllWallets()">select / deselect all</div>
       </div>
     </div>
-
-    <div class="sec-header" style="margin-top:20px">
+    <div class="quick-actions">
+      <button class="quick-btn transfer" onclick="openTransferModal()">🔀 transfer between wallets</button>
+    </div>
+    <div class="sec-header">
       <div class="sec-title">my wallets</div>
       <button class="sec-action" onclick="openWalletModal()">+ add</button>
     </div>
     <div class="wallets-grid" id="wallets-grid-home"></div>
-    <button class="add-wallet-btn" onclick="openWalletModal()" id="add-wallet-empty" style="margin-bottom:20px">
-      <span style="font-size:18px">+</span> add a wallet
-    </button>
-
+    <button class="add-wallet-btn" onclick="openWalletModal()" id="add-wallet-empty" style="margin-bottom:20px"><span style="font-size:18px">+</span> add a wallet</button>
     <div class="sec-header">
       <div class="sec-title">recent activity</div>
       <button class="sec-action" onclick="switchTab('history')">see all</button>
@@ -471,17 +196,13 @@
         <label class="form-label">amount</label>
         <input class="form-input" type="number" id="log-amount" placeholder="$0.00" min="0" step="0.01">
       </div>
-      <div class="form-group">
-        <label class="form-label">category</label>
-        <select class="form-input" id="log-cat">
-          <option value="">choose a category…</option>
-        </select>
+      <div class="form-group" id="log-cat-group">
+        <label class="form-label">category <span style="font-weight:400;text-transform:none;font-size:11px;color:var(--text-faint)">(optional)</span></label>
+        <select class="form-input" id="log-cat"><option value="">no category</option></select>
       </div>
       <div class="form-group">
-        <label class="form-label">wallet used</label>
-        <select class="form-input" id="log-wallet">
-          <option value="">choose a wallet…</option>
-        </select>
+        <label class="form-label">wallet</label>
+        <select class="form-input" id="log-wallet"><option value="">choose a wallet…</option></select>
       </div>
       <button class="submit-btn" onclick="submitLog()">save transaction</button>
     </div>
@@ -490,9 +211,7 @@
   <!-- CATEGORIES -->
   <div id="tab-categories" class="section">
     <div class="cat-grid" id="cat-grid"></div>
-    <button class="add-wallet-btn" onclick="openCatModal()">
-      <span style="font-size:18px">+</span> create a category
-    </button>
+    <button class="add-wallet-btn" onclick="openCatModal()"><span style="font-size:18px">+</span> create a category</button>
   </div>
 
   <!-- HISTORY -->
@@ -501,22 +220,10 @@
   </div>
 
   <nav class="bottom-nav">
-    <button class="nav-btn active" onclick="switchTab('home')" id="nav-home">
-      <span class="nav-icon">🏠</span>
-      <span class="nav-label">home</span>
-    </button>
-    <button class="nav-btn" onclick="switchTab('log')" id="nav-log">
-      <span class="nav-icon">✏️</span>
-      <span class="nav-label">log</span>
-    </button>
-    <button class="nav-btn" onclick="switchTab('categories')" id="nav-categories">
-      <span class="nav-icon">🏷️</span>
-      <span class="nav-label">categories</span>
-    </button>
-    <button class="nav-btn" onclick="switchTab('history')" id="nav-history">
-      <span class="nav-icon">📋</span>
-      <span class="nav-label">history</span>
-    </button>
+    <button class="nav-btn active" onclick="switchTab('home')" id="nav-home"><span class="nav-icon">🏠</span><span class="nav-label">home</span></button>
+    <button class="nav-btn" onclick="switchTab('log')" id="nav-log"><span class="nav-icon">✏️</span><span class="nav-label">log</span></button>
+    <button class="nav-btn" onclick="switchTab('categories')" id="nav-categories"><span class="nav-icon">🏷️</span><span class="nav-label">categories</span></button>
+    <button class="nav-btn" onclick="switchTab('history')" id="nav-history"><span class="nav-icon">📋</span><span class="nav-label">history</span></button>
   </nav>
 </div>
 
@@ -529,23 +236,35 @@
       <label class="form-label">name</label>
       <input class="form-input" type="text" id="wm-name" placeholder="e.g. cash, debit card, savings jar…">
     </div>
-    <div class="form-group">
-      <label class="form-label">starting balance</label>
-      <input class="form-input" type="number" id="wm-amount" placeholder="$0.00" min="0" step="0.01">
+    <!-- Edit mode -->
+    <div id="wm-edit-mode" style="display:none">
+      <div class="form-group">
+        <label class="form-label">update balance</label>
+        <div class="wallet-edit-actions">
+          <button class="wedit-btn active" id="wm-mode-set" onclick="setWalletEditMode('set')">set balance</button>
+          <button class="wedit-btn" id="wm-mode-add" onclick="setWalletEditMode('add')">add money</button>
+          <button class="wedit-btn" id="wm-mode-sub" onclick="setWalletEditMode('sub')">subtract</button>
+        </div>
+        <input class="form-input" type="number" id="wm-amount" placeholder="$0.00" min="0" step="0.01">
+        <div class="amount-hint" id="wm-amount-hint">this will replace the current balance</div>
+      </div>
+    </div>
+    <!-- New wallet mode -->
+    <div id="wm-new-mode">
+      <div class="form-group">
+        <label class="form-label">starting balance</label>
+        <input class="form-input" type="number" id="wm-amount-new" placeholder="$0.00" min="0" step="0.01">
+      </div>
     </div>
     <div class="form-group">
       <label class="form-label">icon</label>
-      <div class="emoji-row" id="wallet-emoji-row">
-        <span class="ep sel" data-e="💵">💵</span>
-        <span class="ep" data-e="💳">💳</span>
-        <span class="ep" data-e="🪙">🪙</span>
-        <span class="ep" data-e="🐷">🐷</span>
-        <span class="ep" data-e="🏦">🏦</span>
-        <span class="ep" data-e="🎁">🎁</span>
-        <span class="ep" data-e="🫙">🫙</span>
-        <span class="ep" data-e="💰">💰</span>
-        <span class="ep" data-e="🧸">🧸</span>
-        <span class="ep" data-e="🌟">🌟</span>
+      <div class="emoji-section-label">recommended</div>
+      <div class="emoji-row" id="wallet-emoji-rec">
+        <span class="ep sel" data-e="💵">💵</span><span class="ep" data-e="💳">💳</span><span class="ep" data-e="🪙">🪙</span><span class="ep" data-e="🐷">🐷</span><span class="ep" data-e="🏦">🏦</span><span class="ep" data-e="🎁">🎁</span><span class="ep" data-e="🫙">🫙</span><span class="ep" data-e="💰">💰</span><span class="ep" data-e="🧸">🧸</span><span class="ep" data-e="🌟">🌟</span>
+      </div>
+      <div class="emoji-section-label">other</div>
+      <div class="emoji-row" id="wallet-emoji-other">
+        <span class="ep" data-e="💎">💎</span><span class="ep" data-e="🏧">🏧</span><span class="ep" data-e="💹">💹</span><span class="ep" data-e="📈">📈</span><span class="ep" data-e="🤑">🤑</span><span class="ep" data-e="💸">💸</span><span class="ep" data-e="🛒">🛒</span><span class="ep" data-e="🏺">🏺</span><span class="ep" data-e="🗝️">🗝️</span><span class="ep" data-e="🔐">🔐</span><span class="ep" data-e="📦">📦</span><span class="ep" data-e="🎒">🎒</span><span class="ep" data-e="👜">👜</span><span class="ep" data-e="👛">👛</span><span class="ep" data-e="🧳">🧳</span><span class="ep" data-e="🪣">🪣</span><span class="ep" data-e="🍀">🍀</span><span class="ep" data-e="🌈">🌈</span><span class="ep" data-e="🌙">🌙</span><span class="ep" data-e="☀️">☀️</span><span class="ep" data-e="🏆">🏆</span><span class="ep" data-e="🎖️">🎖️</span><span class="ep" data-e="🪄">🪄</span><span class="ep" data-e="🏠">🏠</span><span class="ep" data-e="🚀">🚀</span><span class="ep" data-e="✈️">✈️</span><span class="ep" data-e="🚗">🚗</span><span class="ep" data-e="🌊">🌊</span><span class="ep" data-e="🏔️">🏔️</span><span class="ep" data-e="🌺">🌺</span><span class="ep" data-e="🍉">🍉</span><span class="ep" data-e="🍦">🍦</span><span class="ep" data-e="🧁">🧁</span><span class="ep" data-e="🎂">🎂</span><span class="ep" data-e="🍭">🍭</span><span class="ep" data-e="⭐">⭐</span><span class="ep" data-e="🎰">🎰</span><span class="ep" data-e="🪙">🪙</span><span class="ep" data-e="🧮">🧮</span><span class="ep" data-e="📊">📊</span>
       </div>
     </div>
     <div class="modal-btns">
@@ -566,28 +285,42 @@
     </div>
     <div class="form-group">
       <label class="form-label">icon</label>
-      <div class="emoji-row" id="cat-emoji-row">
-        <span class="ep sel" data-e="⭐">⭐</span>
-        <span class="ep" data-e="🎮">🎮</span>
-        <span class="ep" data-e="🍕">🍕</span>
-        <span class="ep" data-e="👟">👟</span>
-        <span class="ep" data-e="📚">📚</span>
-        <span class="ep" data-e="🎵">🎵</span>
-        <span class="ep" data-e="✈️">✈️</span>
-        <span class="ep" data-e="💻">💻</span>
-        <span class="ep" data-e="🎨">🎨</span>
-        <span class="ep" data-e="🐾">🐾</span>
-        <span class="ep" data-e="🏀">🏀</span>
-        <span class="ep" data-e="🛍️">🛍️</span>
-        <span class="ep" data-e="🧃">🧃</span>
-        <span class="ep" data-e="🎬">🎬</span>
-        <span class="ep" data-e="💄">💄</span>
-        <span class="ep" data-e="🚗">🚗</span>
+      <div class="emoji-section-label">recommended</div>
+      <div class="emoji-row" id="cat-emoji-rec">
+        <span class="ep sel" data-e="⭐">⭐</span><span class="ep" data-e="🎮">🎮</span><span class="ep" data-e="🍕">🍕</span><span class="ep" data-e="👟">👟</span><span class="ep" data-e="📚">📚</span><span class="ep" data-e="🎵">🎵</span><span class="ep" data-e="✈️">✈️</span><span class="ep" data-e="💻">💻</span><span class="ep" data-e="🎨">🎨</span><span class="ep" data-e="🐾">🐾</span><span class="ep" data-e="🏀">🏀</span><span class="ep" data-e="🛍️">🛍️</span><span class="ep" data-e="🧃">🧃</span><span class="ep" data-e="🎬">🎬</span><span class="ep" data-e="💄">💄</span><span class="ep" data-e="🚗">🚗</span>
+      </div>
+      <div class="emoji-section-label">other</div>
+      <div class="emoji-row" id="cat-emoji-other">
+        <span class="ep" data-e="🍔">🍔</span><span class="ep" data-e="🍣">🍣</span><span class="ep" data-e="🍜">🍜</span><span class="ep" data-e="🍦">🍦</span><span class="ep" data-e="🧁">🧁</span><span class="ep" data-e="🍭">🍭</span><span class="ep" data-e="🥤">🥤</span><span class="ep" data-e="☕">☕</span><span class="ep" data-e="🧋">🧋</span><span class="ep" data-e="🍰">🍰</span><span class="ep" data-e="🍩">🍩</span><span class="ep" data-e="🌮">🌮</span><span class="ep" data-e="🍜">🍜</span><span class="ep" data-e="🥗">🥗</span><span class="ep" data-e="🍱">🍱</span><span class="ep" data-e="🏋️">🏋️</span><span class="ep" data-e="⚽">⚽</span><span class="ep" data-e="🎾">🎾</span><span class="ep" data-e="🏊">🏊</span><span class="ep" data-e="🚴">🚴</span><span class="ep" data-e="🧗">🧗</span><span class="ep" data-e="🎯">🎯</span><span class="ep" data-e="🎳">🎳</span><span class="ep" data-e="🎲">🎲</span><span class="ep" data-e="🧩">🧩</span><span class="ep" data-e="🪀">🪀</span><span class="ep" data-e="🎸">🎸</span><span class="ep" data-e="🎹">🎹</span><span class="ep" data-e="🎤">🎤</span><span class="ep" data-e="🎧">🎧</span><span class="ep" data-e="📸">📸</span><span class="ep" data-e="📱">📱</span><span class="ep" data-e="🖥️">🖥️</span><span class="ep" data-e="🎁">🎁</span><span class="ep" data-e="🎀">🎀</span><span class="ep" data-e="🎊">🎊</span><span class="ep" data-e="🪅">🪅</span><span class="ep" data-e="🌴">🌴</span><span class="ep" data-e="🏖️">🏖️</span><span class="ep" data-e="⛷️">⛷️</span><span class="ep" data-e="🏕️">🏕️</span><span class="ep" data-e="🗺️">🗺️</span><span class="ep" data-e="🎡">🎡</span><span class="ep" data-e="🎢">🎢</span><span class="ep" data-e="🏟️">🏟️</span><span class="ep" data-e="🚌">🚌</span><span class="ep" data-e="🚆">🚆</span><span class="ep" data-e="🚕">🚕</span><span class="ep" data-e="⛽">⛽</span><span class="ep" data-e="✂️">✂️</span><span class="ep" data-e="💈">💈</span><span class="ep" data-e="🧴">🧴</span><span class="ep" data-e="🧼">🧼</span><span class="ep" data-e="💊">💊</span><span class="ep" data-e="🏥">🏥</span><span class="ep" data-e="👔">👔</span><span class="ep" data-e="👗">👗</span><span class="ep" data-e="🧢">🧢</span><span class="ep" data-e="👒">👒</span><span class="ep" data-e="🧣">🧣</span><span class="ep" data-e="💍">💍</span><span class="ep" data-e="👠">👠</span><span class="ep" data-e="🐶">🐶</span><span class="ep" data-e="🐱">🐱</span><span class="ep" data-e="🐠">🐠</span><span class="ep" data-e="🐰">🐰</span><span class="ep" data-e="🌱">🌱</span><span class="ep" data-e="🪴">🪴</span><span class="ep" data-e="📝">📝</span><span class="ep" data-e="📐">📐</span><span class="ep" data-e="🔬">🔬</span><span class="ep" data-e="🏫">🏫</span><span class="ep" data-e="💡">💡</span><span class="ep" data-e="🔧">🔧</span><span class="ep" data-e="🏠">🏠</span><span class="ep" data-e="🛋️">🛋️</span><span class="ep" data-e="🧹">🧹</span><span class="ep" data-e="🧺">🧺</span><span class="ep" data-e="🎠">🎠</span><span class="ep" data-e="🌻">🌻</span><span class="ep" data-e="🍀">🍀</span><span class="ep" data-e="🦋">🦋</span><span class="ep" data-e="🌸">🌸</span><span class="ep" data-e="🏄">🏄</span><span class="ep" data-e="🤸">🤸</span><span class="ep" data-e="⛳">⛳</span><span class="ep" data-e="🥊">🥊</span><span class="ep" data-e="🎻">🎻</span><span class="ep" data-e="🥁">🥁</span><span class="ep" data-e="🎭">🎭</span><span class="ep" data-e="📖">📖</span><span class="ep" data-e="🖊️">🖊️</span>
       </div>
     </div>
     <div class="modal-btns">
       <button class="btn-cancel" onclick="closeModal('cat-modal')">cancel</button>
       <button class="btn-save" onclick="saveCategory()">save category</button>
+    </div>
+  </div>
+</div>
+
+<!-- TRANSFER MODAL -->
+<div class="modal-overlay" id="transfer-modal">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div class="modal-title">🔀 transfer money</div>
+    <div class="form-group">
+      <label class="form-label">from wallet</label>
+      <select class="form-input" id="tr-from"><option value="">choose wallet…</option></select>
+    </div>
+    <div class="form-group">
+      <label class="form-label">to wallet</label>
+      <select class="form-input" id="tr-to"><option value="">choose wallet…</option></select>
+    </div>
+    <div class="form-group">
+      <label class="form-label">amount</label>
+      <input class="form-input" type="number" id="tr-amount" placeholder="$0.00" min="0" step="0.01">
+    </div>
+    <div class="modal-btns">
+      <button class="btn-cancel" onclick="closeModal('transfer-modal')">cancel</button>
+      <button class="btn-save blue" onclick="doTransfer()">transfer</button>
     </div>
   </div>
 </div>
@@ -598,10 +331,10 @@
   let wallets = JSON.parse(localStorage.getItem('bacon_wallets') || '[]');
   let categories = JSON.parse(localStorage.getItem('bacon_cats') || '[]');
   let transactions = JSON.parse(localStorage.getItem('bacon_txns') || '[]');
-  // excluded wallets = set of wallet names excluded from total
   let excludedWallets = new Set(JSON.parse(localStorage.getItem('bacon_excluded') || '[]'));
   let logType = 'spend';
   let editWalletIdx = null;
+  let walletEditMode = 'set';
 
   function save() {
     localStorage.setItem('bacon_wallets', JSON.stringify(wallets));
@@ -624,61 +357,35 @@
     dd.classList.toggle('open');
     if (dd.classList.contains('open')) renderFilterList();
   }
-
-  document.addEventListener('click', () => {
-    document.getElementById('filter-dropdown').classList.remove('open');
-  });
-
+  document.addEventListener('click', () => document.getElementById('filter-dropdown').classList.remove('open'));
   function renderFilterList() {
     const list = document.getElementById('filter-list');
-    if (!wallets.length) {
-      list.innerHTML = '<div style="padding:12px 14px;font-size:13px;color:var(--text-muted)">no wallets yet</div>';
-      return;
-    }
-    list.innerHTML = wallets.map((w, i) => {
+    if (!wallets.length) { list.innerHTML = '<div style="padding:12px 14px;font-size:13px;color:var(--text-muted)">no wallets yet</div>'; return; }
+    list.innerHTML = wallets.map(w => {
       const included = !excludedWallets.has(w.name);
-      return `<div class="filter-item" onclick="toggleWalletFilter('${w.name.replace(/'/g,"\\'")}', event)">
-        <div class="filter-check ${included ? 'checked' : ''}">
-          ${included ? '✓' : ''}
-        </div>
+      return `<div class="filter-item" onclick="toggleWalletFilter('${w.name.replace(/'/g,"\\'")}',event)">
+        <div class="filter-check ${included?'checked':''}">${included?'✓':''}</div>
         <span class="filter-item-icon">${w.icon}</span>
         <span class="filter-item-name">${w.name}</span>
         <span class="filter-item-amt">$${w.amount.toFixed(2)}</span>
       </div>`;
     }).join('');
   }
-
   function toggleWalletFilter(name, e) {
     e.stopPropagation();
-    if (excludedWallets.has(name)) excludedWallets.delete(name);
-    else excludedWallets.add(name);
-    save();
-    renderFilterList();
-    updateTotal();
+    if (excludedWallets.has(name)) excludedWallets.delete(name); else excludedWallets.add(name);
+    save(); renderFilterList(); updateTotal();
   }
-
   function toggleAllWallets() {
-    const anyExcluded = excludedWallets.size > 0;
-    if (anyExcluded) {
-      excludedWallets.clear();
-    } else {
-      wallets.forEach(w => excludedWallets.add(w.name));
-    }
-    save();
-    renderFilterList();
-    updateTotal();
+    if (excludedWallets.size > 0) excludedWallets.clear();
+    else wallets.forEach(w => excludedWallets.add(w.name));
+    save(); renderFilterList(); updateTotal();
   }
-
   function updateTotal() {
     const included = wallets.filter(w => !excludedWallets.has(w.name));
-    const total = included.reduce((s, w) => s + w.amount, 0);
-    document.getElementById('total-display').textContent = '$' + total.toFixed(2);
-    const excCount = excludedWallets.size;
-    const lbl = document.getElementById('filter-label');
-    lbl.textContent = excCount === 0 ? 'all wallets' : (wallets.length - excCount) + ' of ' + wallets.length;
-    const sub = wallets.length === 0 ? 'add your first wallet to get started' :
-      included.length + ' of ' + wallets.length + ' wallet' + (wallets.length > 1 ? 's' : '') + ' included';
-    document.getElementById('wallet-count-sub').textContent = sub;
+    document.getElementById('total-display').textContent = '$' + included.reduce((s,w)=>s+w.amount,0).toFixed(2);
+    document.getElementById('filter-label').textContent = excludedWallets.size === 0 ? 'all wallets' : (wallets.length - excludedWallets.size) + ' of ' + wallets.length;
+    document.getElementById('wallet-count-sub').textContent = wallets.length === 0 ? 'add your first wallet to get started' : included.length + ' of ' + wallets.length + ' wallet' + (wallets.length>1?'s':'') + ' included';
   }
 
   // TABS
@@ -687,7 +394,7 @@
     document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
     document.getElementById('tab-' + name).classList.add('active');
     document.getElementById('nav-' + name).classList.add('active');
-    if (name === 'log') populateLogSelects();
+    if (name === 'log') { populateLogSelects(); updateCatVisibility(); }
     if (name === 'categories') renderCategories();
     if (name === 'history') renderHistory();
     if (name === 'home') renderHome();
@@ -696,75 +403,118 @@
   // MODALS
   function openWalletModal(idx) {
     editWalletIdx = idx !== undefined ? idx : null;
-    document.getElementById('wallet-modal-title').textContent = editWalletIdx !== null ? 'edit wallet' : 'add a wallet';
-    if (editWalletIdx !== null) {
+    const isEdit = editWalletIdx !== null;
+    document.getElementById('wallet-modal-title').textContent = isEdit ? 'edit wallet' : 'add a wallet';
+    document.getElementById('wm-edit-mode').style.display = isEdit ? 'block' : 'none';
+    document.getElementById('wm-new-mode').style.display = isEdit ? 'none' : 'block';
+    if (isEdit) {
       const w = wallets[editWalletIdx];
       document.getElementById('wm-name').value = w.name;
-      document.getElementById('wm-amount').value = w.amount.toFixed(2);
-      setEmojiPicker('wallet-emoji-row', w.icon);
+      document.getElementById('wm-amount').value = '';
+      walletEditMode = 'set';
+      updateWalletEditModeUI();
+      setEmojiPickerPair('wallet-emoji-rec', 'wallet-emoji-other', w.icon);
     } else {
       document.getElementById('wm-name').value = '';
-      document.getElementById('wm-amount').value = '';
-      setEmojiPicker('wallet-emoji-row', '💵');
+      document.getElementById('wm-amount-new').value = '';
+      setEmojiPickerPair('wallet-emoji-rec', 'wallet-emoji-other', '💵');
     }
     document.getElementById('wallet-modal').classList.add('open');
   }
 
+  function setWalletEditMode(mode) {
+    walletEditMode = mode;
+    updateWalletEditModeUI();
+  }
+  function updateWalletEditModeUI() {
+    ['set','add','sub'].forEach(m => document.getElementById('wm-mode-'+m).classList.toggle('active', walletEditMode===m));
+    const hints = { set:'this will replace the current balance', add:'this amount will be added to current balance', sub:'this amount will be subtracted from current balance' };
+    document.getElementById('wm-amount-hint').textContent = hints[walletEditMode];
+  }
+
   function openCatModal() {
     document.getElementById('cm-name').value = '';
-    setEmojiPicker('cat-emoji-row', '⭐');
+    setEmojiPickerPair('cat-emoji-rec', 'cat-emoji-other', '⭐');
     document.getElementById('cat-modal').classList.add('open');
   }
 
-  function closeModal(id) {
-    document.getElementById(id).classList.remove('open');
+  function openTransferModal() {
+    if (wallets.length < 2) { showToast('need at least 2 wallets to transfer!'); return; }
+    const opts = wallets.map(w => `<option value="${w.name}">${w.icon} ${w.name} ($${w.amount.toFixed(2)})</option>`).join('');
+    document.getElementById('tr-from').innerHTML = '<option value="">choose wallet…</option>' + opts;
+    document.getElementById('tr-to').innerHTML = '<option value="">choose wallet…</option>' + opts;
+    document.getElementById('tr-amount').value = '';
+    document.getElementById('transfer-modal').classList.add('open');
   }
 
-  document.querySelectorAll('.modal-overlay').forEach(o => {
-    o.addEventListener('click', e => { if (e.target === o) closeModal(o.id); });
-  });
-
-  function setEmojiPicker(rowId, selected) {
-    document.querySelectorAll('#' + rowId + ' .ep').forEach(e => {
-      e.classList.toggle('sel', e.dataset.e === selected);
-    });
-    const row = document.getElementById(rowId);
-    if (!row.querySelector('.ep.sel')) row.querySelector('.ep').classList.add('sel');
+  function doTransfer() {
+    const fromName = document.getElementById('tr-from').value;
+    const toName = document.getElementById('tr-to').value;
+    const amount = parseFloat(document.getElementById('tr-amount').value);
+    if (!fromName || !toName) { showToast('pick both wallets!'); return; }
+    if (fromName === toName) { showToast("can't transfer to the same wallet!"); return; }
+    if (!amount || amount <= 0) { showToast('enter a valid amount!'); return; }
+    const fIdx = wallets.findIndex(w => w.name === fromName);
+    const tIdx = wallets.findIndex(w => w.name === toName);
+    if (wallets[fIdx].amount < amount) { showToast("not enough in that wallet!"); return; }
+    wallets[fIdx].amount -= amount;
+    wallets[tIdx].amount += amount;
+    transactions.unshift({ desc:`Transfer: ${fromName} → ${toName}`, amount, cat:'', wallet:fromName, toWallet:toName, type:'transfer', date:new Date().toISOString() });
+    save(); closeModal('transfer-modal'); renderHome();
+    showToast('$' + amount.toFixed(2) + ' transferred!');
   }
 
-  document.querySelectorAll('.emoji-row').forEach(row => {
-    row.addEventListener('click', e => {
+  function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+  document.querySelectorAll('.modal-overlay').forEach(o => o.addEventListener('click', e => { if (e.target===o) closeModal(o.id); }));
+
+  // EMOJI — pair of rec + other rows per modal
+  function setEmojiPickerPair(recId, otherId, selected) {
+    const all = [...document.querySelectorAll('#'+recId+' .ep'), ...document.querySelectorAll('#'+otherId+' .ep')];
+    all.forEach(e => e.classList.toggle('sel', e.dataset.e === selected));
+    if (!all.find(e => e.classList.contains('sel'))) document.querySelector('#'+recId+' .ep').classList.add('sel');
+  }
+
+  // Handle emoji clicks within each modal — deselect all in that modal, select clicked
+  document.querySelectorAll('.modal-sheet').forEach(sheet => {
+    sheet.addEventListener('click', e => {
       const opt = e.target.closest('.ep');
       if (!opt) return;
-      row.querySelectorAll('.ep').forEach(o => o.classList.remove('sel'));
+      sheet.querySelectorAll('.ep').forEach(o => o.classList.remove('sel'));
       opt.classList.add('sel');
     });
   });
 
-  function getSelectedEmoji(rowId) {
-    return document.querySelector('#' + rowId + ' .ep.sel')?.dataset.e || '⭐';
+  function getSelectedEmojiInModal(modalId) {
+    return document.querySelector('#' + modalId + ' .ep.sel')?.dataset.e || '⭐';
   }
 
   // WALLETS
   function saveWallet() {
     const name = document.getElementById('wm-name').value.trim();
-    const amount = parseFloat(document.getElementById('wm-amount').value) || 0;
-    const icon = getSelectedEmoji('wallet-emoji-row');
     if (!name) { showToast('please enter a name!'); return; }
+    const icon = getSelectedEmojiInModal('wallet-modal');
     if (editWalletIdx !== null) {
-      const oldName = wallets[editWalletIdx].name;
-      if (oldName !== name) {
-        if (excludedWallets.has(oldName)) { excludedWallets.delete(oldName); excludedWallets.add(name); }
+      const w = wallets[editWalletIdx];
+      const val = parseFloat(document.getElementById('wm-amount').value);
+      let newAmount = w.amount;
+      if (!isNaN(val) && val >= 0) {
+        if (walletEditMode === 'set') newAmount = val;
+        else if (walletEditMode === 'add') newAmount = w.amount + val;
+        else if (walletEditMode === 'sub') {
+          if (val > w.amount) { showToast("can't go below $0!"); return; }
+          newAmount = w.amount - val;
+        }
       }
-      wallets[editWalletIdx] = { ...wallets[editWalletIdx], name, icon, amount };
+      const oldName = w.name;
+      if (oldName !== name && excludedWallets.has(oldName)) { excludedWallets.delete(oldName); excludedWallets.add(name); }
+      wallets[editWalletIdx] = { ...w, name, icon, amount: newAmount };
       showToast('wallet updated!');
     } else {
+      const amount = parseFloat(document.getElementById('wm-amount-new').value) || 0;
       wallets.push({ name, icon, amount });
       showToast('wallet added!');
     }
-    save();
-    closeModal('wallet-modal');
-    renderHome();
+    save(); closeModal('wallet-modal'); renderHome();
   }
 
   function deleteWallet(idx, e) {
@@ -772,59 +522,51 @@
     if (!confirm('delete this wallet?')) return;
     excludedWallets.delete(wallets[idx].name);
     wallets.splice(idx, 1);
-    save();
-    renderHome();
-    showToast('wallet deleted');
+    save(); renderHome(); showToast('wallet deleted');
   }
 
   // CATEGORIES
   function saveCategory() {
     const name = document.getElementById('cm-name').value.trim();
-    const icon = getSelectedEmoji('cat-emoji-row');
     if (!name) { showToast('please enter a name!'); return; }
+    const icon = getSelectedEmojiInModal('cat-modal');
     categories.push({ name, icon });
-    save();
-    closeModal('cat-modal');
-    renderCategories();
-    showToast('category created!');
+    save(); closeModal('cat-modal'); renderCategories(); showToast('category created!');
   }
 
   function deleteCategory(idx, e) {
     e.stopPropagation();
     if (!confirm('delete this category?')) return;
     categories.splice(idx, 1);
-    save();
-    renderCategories();
-    showToast('category deleted');
+    save(); renderCategories(); showToast('category deleted');
   }
 
   // LOG
   function setType(t) {
     logType = t;
-    document.getElementById('type-spend').className = 'type-btn' + (t === 'spend' ? ' active-spend' : '');
-    document.getElementById('type-gain').className = 'type-btn' + (t === 'gain' ? ' active-gain' : '');
+    document.getElementById('type-spend').className = 'type-btn' + (t==='spend'?' active-spend':'');
+    document.getElementById('type-gain').className = 'type-btn' + (t==='gain'?' active-gain':'');
+    updateCatVisibility();
   }
-
+  function updateCatVisibility() {
+    document.getElementById('log-cat-group').style.display = logType === 'gain' ? 'none' : 'block';
+  }
   function populateLogSelects() {
     const cs = document.getElementById('log-cat');
     const ws = document.getElementById('log-wallet');
     const pCat = cs.value, pW = ws.value;
-    cs.innerHTML = '<option value="">choose a category…</option>' +
-      categories.map(c => `<option value="${c.name}">${c.icon} ${c.name}</option>`).join('');
-    ws.innerHTML = '<option value="">choose a wallet…</option>' +
-      wallets.map(w => `<option value="${w.name}">${w.icon} ${w.name}</option>`).join('');
-    cs.value = pCat;
-    ws.value = pW;
+    cs.innerHTML = '<option value="">no category</option>' + categories.map(c=>`<option value="${c.name}">${c.icon} ${c.name}</option>`).join('');
+    ws.innerHTML = '<option value="">choose a wallet…</option>' + wallets.map(w=>`<option value="${w.name}">${w.icon} ${w.name}</option>`).join('');
+    cs.value = pCat; ws.value = pW;
   }
 
   function submitLog() {
     const desc = document.getElementById('log-desc').value.trim();
     const amount = parseFloat(document.getElementById('log-amount').value);
-    const cat = document.getElementById('log-cat').value;
+    const cat = logType === 'gain' ? '' : document.getElementById('log-cat').value;
     const walletName = document.getElementById('log-wallet').value;
     if (!desc) { showToast('add a description!'); return; }
     if (!amount || amount <= 0) { showToast('enter a valid amount!'); return; }
-    if (!cat) { showToast('pick a category!'); return; }
     if (!walletName) { showToast('pick a wallet!'); return; }
     const wIdx = wallets.findIndex(w => w.name === walletName);
     if (logType === 'spend') {
@@ -833,13 +575,13 @@
     } else {
       wallets[wIdx].amount += amount;
     }
-    transactions.unshift({ desc, amount, cat, wallet: walletName, type: logType, date: new Date().toISOString() });
+    transactions.unshift({ desc, amount, cat, wallet:walletName, type:logType, date:new Date().toISOString() });
     save();
     document.getElementById('log-desc').value = '';
     document.getElementById('log-amount').value = '';
     document.getElementById('log-cat').value = '';
     document.getElementById('log-wallet').value = '';
-    showToast((logType === 'gain' ? '+' : '−') + '$' + amount.toFixed(2) + ' saved!');
+    showToast((logType==='gain'?'+':'−') + '$' + amount.toFixed(2) + ' saved!');
   }
 
   function deleteTransaction(idx) {
@@ -848,71 +590,61 @@
     const wIdx = wallets.findIndex(w => w.name === t.wallet);
     if (wIdx !== -1) {
       if (t.type === 'spend') wallets[wIdx].amount += t.amount;
-      else wallets[wIdx].amount -= t.amount;
+      else if (t.type === 'gain') wallets[wIdx].amount -= t.amount;
+      else if (t.type === 'transfer') {
+        wallets[wIdx].amount += t.amount;
+        const tIdx = wallets.findIndex(w => w.name === t.toWallet);
+        if (tIdx !== -1) wallets[tIdx].amount -= t.amount;
+      }
     }
     transactions.splice(idx, 1);
-    save();
-    renderHistory();
-    renderHome();
-    showToast('transaction deleted');
+    save(); renderHistory(); renderHome(); showToast('transaction deleted');
   }
 
   // RENDER
   function renderHome() {
     updateTotal();
-    const grid = document.getElementById('wallets-grid-home');
-    grid.innerHTML = wallets.map((w, i) => {
+    document.getElementById('wallets-grid-home').innerHTML = wallets.map((w,i) => {
       const excluded = excludedWallets.has(w.name);
-      return `<div class="wallet-card ${excluded ? 'excluded' : ''}" onclick="openWalletModal(${i})">
+      return `<div class="wallet-card ${excluded?'excluded':''}" onclick="openWalletModal(${i})">
         <div style="display:flex;justify-content:space-between;align-items:flex-start">
           <div class="wallet-icon-wrap">${w.icon}</div>
-          <button class="delete-btn" onclick="deleteWallet(${i}, event)" title="delete">×</button>
+          <button class="delete-btn" onclick="deleteWallet(${i},event)">×</button>
         </div>
         <div class="wallet-name">${w.name}</div>
         <div class="wallet-amount">$${w.amount.toFixed(2)}</div>
-        ${excluded ? '<div class="excluded-badge">excluded</div>' : ''}
+        ${excluded?'<div class="excluded-badge">excluded</div>':''}
       </div>`;
     }).join('');
-
     document.getElementById('add-wallet-empty').style.display = wallets.length > 0 ? 'none' : 'flex';
-
-    const recent = transactions.slice(0, 5);
     const catMap = Object.fromEntries(categories.map(c => [c.name, c.icon]));
+    const recent = transactions.slice(0,5);
     const recentEl = document.getElementById('recent-list');
-    if (!recent.length) {
-      recentEl.innerHTML = '<div class="empty-msg"><span class="empty-emoji">💸</span>no transactions yet</div>';
-    } else {
-      recentEl.innerHTML = recent.map(t => {
-        const icon = catMap[t.cat] || '📝';
-        const d = new Date(t.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-        return `<div class="txn-mini">
-          <div class="txn-dot ${t.type}">${icon}</div>
-          <div class="txn-info">
-            <div class="txn-desc">${t.desc}</div>
-            <div class="txn-meta">${t.cat} · ${t.wallet} · ${d}</div>
-          </div>
-          <div class="txn-amount ${t.type}">${t.type === 'gain' ? '+' : '−'}$${t.amount.toFixed(2)}</div>
-        </div>`;
-      }).join('');
-    }
+    if (!recent.length) { recentEl.innerHTML = '<div class="empty-msg"><span class="empty-emoji">💸</span>no transactions yet</div>'; return; }
+    recentEl.innerHTML = recent.map(t => {
+      const icon = t.type==='transfer'?'🔀':(catMap[t.cat]||'📝');
+      const d = new Date(t.date).toLocaleDateString('en-US',{month:'short',day:'numeric'});
+      const meta = t.type==='transfer'?`${t.wallet} → ${t.toWallet} · ${d}`:`${t.cat||'no category'} · ${t.wallet} · ${d}`;
+      const sign = t.type==='gain'?'+':t.type==='transfer'?'⇄':'−';
+      return `<div class="txn-mini">
+        <div class="txn-dot ${t.type}">${icon}</div>
+        <div class="txn-info"><div class="txn-desc">${t.desc}</div><div class="txn-meta">${meta}</div></div>
+        <div class="txn-amount ${t.type}">${sign}$${t.amount.toFixed(2)}</div>
+      </div>`;
+    }).join('');
   }
 
   function renderCategories() {
     const grid = document.getElementById('cat-grid');
-    if (!categories.length) {
-      grid.innerHTML = '<div class="empty-msg" style="grid-column:1/-1"><span class="empty-emoji">🏷️</span>no categories yet</div>';
-      return;
-    }
-    const maxSpend = Math.max(...categories.map(c =>
-      transactions.filter(t => t.type === 'spend' && t.cat === c.name).reduce((s,t)=>s+t.amount,0)
-    ), 1);
-    grid.innerHTML = categories.map((c, i) => {
-      const spent = transactions.filter(t => t.type === 'spend' && t.cat === c.name).reduce((s,t)=>s+t.amount,0);
-      const pct = Math.min(100, (spent / maxSpend) * 100);
+    if (!categories.length) { grid.innerHTML = '<div class="empty-msg" style="grid-column:1/-1"><span class="empty-emoji">🏷️</span>no categories yet</div>'; return; }
+    const maxSpend = Math.max(...categories.map(c => transactions.filter(t=>t.type==='spend'&&t.cat===c.name).reduce((s,t)=>s+t.amount,0)), 1);
+    grid.innerHTML = categories.map((c,i) => {
+      const spent = transactions.filter(t=>t.type==='spend'&&t.cat===c.name).reduce((s,t)=>s+t.amount,0);
+      const pct = Math.min(100,(spent/maxSpend)*100);
       return `<div class="cat-card">
         <div style="display:flex;justify-content:space-between;align-items:flex-start">
           <div class="cat-emoji">${c.icon}</div>
-          <button class="delete-btn" onclick="deleteCategory(${i}, event)">×</button>
+          <button class="delete-btn" onclick="deleteCategory(${i},event)">×</button>
         </div>
         <div class="cat-name">${c.name}</div>
         <div class="cat-spent">$${spent.toFixed(2)} spent</div>
@@ -923,21 +655,17 @@
 
   function renderHistory() {
     const list = document.getElementById('txn-full-list');
-    if (!transactions.length) {
-      list.innerHTML = '<div class="empty-msg"><span class="empty-emoji">📋</span>no transactions yet</div>';
-      return;
-    }
+    if (!transactions.length) { list.innerHTML = '<div class="empty-msg"><span class="empty-emoji">📋</span>no transactions yet</div>'; return; }
     const catMap = Object.fromEntries(categories.map(c => [c.name, c.icon]));
-    list.innerHTML = transactions.map((t, i) => {
-      const icon = catMap[t.cat] || '📝';
-      const d = new Date(t.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    list.innerHTML = transactions.map((t,i) => {
+      const icon = t.type==='transfer'?'🔀':(catMap[t.cat]||'📝');
+      const d = new Date(t.date).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+      const meta = t.type==='transfer'?`${t.wallet} → ${t.toWallet} · ${d}`:`${t.cat||'no category'} · ${t.wallet} · ${d}`;
+      const sign = t.type==='gain'?'+':t.type==='transfer'?'⇄':'−';
       return `<div class="txn-full">
         <div class="txn-dot ${t.type}">${icon}</div>
-        <div class="txn-info">
-          <div class="txn-desc">${t.desc}</div>
-          <div class="txn-meta">${t.cat} · ${t.wallet} · ${d}</div>
-        </div>
-        <div class="txn-amount ${t.type}">${t.type === 'gain' ? '+' : '−'}$${t.amount.toFixed(2)}</div>
+        <div class="txn-info"><div class="txn-desc">${t.desc}</div><div class="txn-meta">${meta}</div></div>
+        <div class="txn-amount ${t.type}">${sign}$${t.amount.toFixed(2)}</div>
         <button class="delete-btn" onclick="deleteTransaction(${i})">×</button>
       </div>`;
     }).join('');
